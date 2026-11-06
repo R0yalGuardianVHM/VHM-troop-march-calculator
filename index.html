@@ -5,50 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Royals Standard March Calculator</title>
     <style>
-        /* Eliminates default browser spacing to remove the white border */
-        html, body {
-            margin: 0 !important;
-            padding: 0 !important;
-            width: 100%;
-            height: 100%;
-            background-color: #0f172a;
-        }
-
-        /* Premium Built-in Dark Mode Theme */
-        .app-bg { 
-            background-color: #0f172a; 
-            color: #f8fafc; 
-            font-family: system-ui, -apple-system, sans-serif; 
-            padding: 16px; 
-            min-height: 100vh; 
-            box-sizing: border-box; 
-        }
-        
+        html, body { margin: 0 !important; padding: 0 !important; width: 100%; height: 100%; background-color: #0f172a; top: 0px !important; }
+        .app-bg { background-color: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; padding: 16px; min-height: 100vh; box-sizing: border-box; }
         .card { background-color: #020617; border: 1px solid #1e293b; border-radius: 12px; padding: 16px; margin-bottom: 16px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5); }
         .header-card { text-align: center; border-bottom: 2px solid #1e293b; padding-bottom: 12px; }
-        .title { color: #38bdf8; font-size: 20px; font-weight: 800; letter-spacing: 0.5px; margin: 0; }
+        .title { color: #38bdf8; font-size: 20px; font-weight: 800; tracking-spacing: 0.5px; margin: 0; }
         .subtitle { color: #94a3b8; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; font-weight: 600; }
-        
-        /* Centered Mobile-Safe Universal Translate Dropdown Box */
         .translate-box { display: flex; justify-content: center; align-items: center; margin-bottom: 16px; width: 100%; text-align: center; }
         #google_translate_element { display: inline-block; min-width: 220px; }
         #google_translate_element select { background-color: #020617 !important; color: #38bdf8 !important; border: 1px solid #1e293b !important; border-radius: 8px !important; padding: 10px 14px !important; font-size: 14px !important; outline: none !important; font-weight: 600 !important; width: 100%; cursor: pointer; }
-        
-        /* Clean up legacy banners and branding badges */
         .goog-te-gadget { color: transparent !important; font-size: 0px !important; }
         .goog-te-gadget span, .goog-te-banner-frame, #goog-gt-tt, .goog-logo-link { display: none !important; }
-
-        /* Interactive Interface Controls */
         .input-label { display: block; font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 6px; }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
         .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
         .input-field { width: 100%; box-sizing: border-box; background-color: #0f172a; border: 1px solid #1e293b; border-radius: 8px; padding: 10px; color: #ffffff; font-family: monospace; font-size: 14px; outline: none; }
         .input-field:focus { border-color: #38bdf8; }
-        
         .toggle-btn { width: 100%; background-color: #0f172a; border: 1px solid #1e293b; color: #94a3b8; padding: 10px; font-size: 12px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s; text-align: center; }
         .toggle-btn.active { background-color: #2563eb; color: #ffffff; box-shadow: 0 4px 6px -1px rgba(37,99,235,0.4); border-color: #2563eb; }
-        
-        /* Output Data Presentation Table Layout */
         .table-container { overflow-x: auto; background-color: #020617; border: 1px solid #1e293b; border-radius: 12px; }
         .table-header { padding: 12px; background-color: #0f172a; border-bottom: 1px solid #1e293b; display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: 700; }
         table { width: 100%; border-collapse: collapse; font-family: monospace; font-size: 11px; text-align: left; }
@@ -57,7 +31,6 @@
         .row-fight { background-color: rgba(37, 99, 235, 0.08); color: #f8fafc; font-weight: bold; }
         .row-layer { color: #64748b; }
         .text-right { text-align: right; }
-        
         .tc-tier { color: #94a3b8; font-weight: bold; }
         .tc-ranged { color: #38bdf8; }
         .tc-mounted { color: #f59e0b; }
@@ -66,20 +39,12 @@
     </style>
 </head>
 <body>
-
 <div class="app-bg">
-    <!-- Centered Universal Global Translation Drop-Box Selector -->
-    <div class="translate-box">
-        <div id="google_translate_element"></div>
-    </div>
-
-    <!-- Header Block -->
+    <div class="translate-box"><div id="google_translate_element"></div></div>
     <header class="card header-card">
         <h1 class="title">Royals standard march calculator</h1>
         <div class="subtitle">CONCENTRATED ATTACK PROFILE ENGINE</div>
     </header>
-
-    <!-- Controls Input Interface Box -->
     <div class="card">
         <div style="margin-bottom: 14px;">
             <label class="input-label">Matrix Setup</label>
@@ -88,7 +53,6 @@
                 <button onclick="setMatrix(4)" id="m4" class="toggle-btn">4-Tier Matrix</button>
             </div>
         </div>
-
         <div style="margin-bottom: 14px;">
             <label class="input-label">Core Attack Typemask</label>
             <div class="grid-3">
@@ -97,12 +61,10 @@
                 <button onclick="setBias('MOUNTED')" id="bM" class="toggle-btn">Mounted</button>
             </div>
         </div>
-
         <div style="margin-bottom: 6px;">
             <label class="input-label">Total March Size</label>
             <input type="number" id="marchSize" value="6000000" oninput="runCalc()" class="input-field" style="font-size: 16px; font-weight: bold; color: #38bdf8;">
         </div>
-
         <div class="grid-2" style="margin-top: 12px; margin-bottom: 0;">
             <div>
                 <label class="input-label">Top Tier</label>
@@ -114,8 +76,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Output Metrics Grid Visualizer -->
     <div class="table-container">
         <div class="table-header">
             <span style="color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.5px;">CALCULATED DEPLOYMENT ARCHITECTURE</span>
@@ -132,45 +92,23 @@
                         <th class="text-right tc-siege">Siege</th>
                     </tr>
                 </thead>
-                <tbody id="matrixDisplay">
-                    <!-- Dynamic calculations rows populate smoothly -->
-                </tbody>
+                <tbody id="matrixDisplay"></tbody>
             </table>
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-    }
-</script>
-<script type="text/javascript" src="https://google.com"></script>
-
 <script>
-/* HARDCODED MATHEMATICAL DATABASE PREVENTING SYSTEM DATA DROPS */
 const db = {
-    3: {
-        RANGED: [0.20, 0.30, 0.50],
-        GROUND: [0.50, 0.30, 0.20],
-        MOUNTED: [0.35, 0.45, 0.20]
-    },
-    4: {
-        RANGED: [0.10, 0.20, 0.30, 0.40],
-        GROUND: [0.40, 0.30, 0.20, 0.10],
-        MOUNTED: [0.25, 0.45, 0.20, 0.10]
-    }
+    3: { RANGED: [0.20, 0.30, 0.50], GROUND: [0.50, 0.30, 0.20], MOUNTED: [0.35, 0.45, 0.20] },
+    4: { RANGED: [0.10, 0.20, 0.30, 0.40], GROUND: [0.40, 0.30, 0.20, 0.10], MOUNTED: [0.25, 0.45, 0.20, 0.10] }
 };
-
 let layers = 3, bias = 'RANGED';
-
 function setMatrix(n) {
     layers = n;
     document.getElementById('m3').className = (n === 3) ? "toggle-btn active" : "toggle-btn";
     document.getElementById('m4').className = (n === 4) ? "toggle-btn active" : "toggle-btn";
     runCalc();
 }
-
 function setBias(b) {
     bias = b;
     document.getElementById('bR').className = (b === 'RANGED') ? "toggle-btn active" : "toggle-btn";
@@ -178,36 +116,33 @@ function setBias(b) {
     document.getElementById('bM').className = (b === 'MOUNTED') ? "toggle-btn active" : "toggle-btn";
     runCalc();
 }
-
 function fmt(n) { return Math.round(n).toLocaleString('en-GB'); }
-
 function runCalc() {
     const ms = parseFloat(document.getElementById('marchSize').value) || 0;
     const tt = parseInt(document.getElementById('topTier').value) || 17;
     const ls = parseFloat(document.getElementById('layerSize').value) || 0;
-    
     const activeWeights = db[layers][bias];
-    const ratioStr = activeWeights.map(w => (w * 100) + '%').join(' / ');
-    document.getElementById('ratioInfo').innerText = ratioStr;
-
+    document.getElementById('ratioInfo').innerText = activeWeights.map(w => (w * 100) + '%').join(' / ');
     let html = '';
     const fightTiers = [];
-    for (let i = 0; i < layers; i++) {
-        const tierNum = tt - i;
-        if (tierNum > 0) fightTiers.push(tierNum);
-    }
-    
+    for (let i = 0; i < layers; i++) { if (tt - i > 0) fightTiers.push(tt - i); }
     let totalLayersCount = 0;
-    for (let t = 1; t <= tt; t++) {
-        if (!fightTiers.includes(t)) {
-            totalLayersCount += 4;
-        }
-    }
-    
-    const totalLayerTroops = totalLayersCount * ls;
-    const remainingMarchSpace = Math.max(0, ms - totalLayerTroops);
-
+    for (let t = 1; t <= tt; t++) { if (!fightTiers.includes(t)) totalLayersCount += 4; }
+    const remainingMarchSpace = Math.max(0, ms - (totalLayersCount * ls));
     for (let t = tt; t >= 1; t--) {
-        let isFight = fightTiers.includes(t);
-        let rowClass = isFight ? 'row-fight' : 'row-layer';
-        
+        let isFight = fightTiers.includes(t), rowClass = isFight ? 'row-fight' : 'row-layer';
+        let rVal = ls, mVal = ls, gVal = ls, sVal = ls;
+        if (isFight) {
+            const w = activeWeights[fightTiers.indexOf(t)];
+            if (bias === 'RANGED') rVal = remainingMarchSpace * w;
+            else if (bias === 'GROUND') gVal = remainingMarchSpace * w;
+            else if (bias === 'MOUNTED') mVal = remainingMarchSpace * w;
+        }
+        html += `<tr class="${rowClass}"><td style="padding-left:12px;" class="tc-tier">T${t}</td><td class="text-right">${fmt(rVal)}</td><td class="text-right">${fmt(mVal)}</td><td class="text-right">${fmt(gVal)}</td><td class="text-right">${fmt(sVal)}</td></tr>`;
+    }
+    document.getElementById('matrixDisplay').innerHTML = html;
+}
+window.onload = function() { runCalc(); };
+</script>
+</body>
+</html>
