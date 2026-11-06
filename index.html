@@ -1,19 +1,21 @@
+<!DOCTYPE html>
+<html lang="en-GB">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royals Standard March Calculator</title>
     <style>
-        /* Removes the white border line around the screen edge */
+        /* Premium Built-in Dark Mode Theme */
         body { 
             top: 0px !important; 
             margin: 0 !important; 
             padding: 0 !important; 
+            background-color: #0f172a;
         }
-
-        /* Premium Built-in Dark Mode Theme */
         .app-bg { background-color: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; padding: 16px; min-height: 100vh; box-sizing: border-box; }
         .card { background-color: #020617; border: 1px solid #1e293b; border-radius: 12px; padding: 16px; margin-bottom: 16px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5); }
         .header-card { text-align: center; border-bottom: 2px solid #1e293b; padding-bottom: 12px; }
-        .title { color: #38bdf8; font-size: 20px; font-weight: 800; tracking-spacing: 0.5px; margin: 0; }
+        .title { color: #38bdf8; font-size: 20px; font-weight: 800; letter-spacing: 0.5px; margin: 0; }
         .subtitle { color: #94a3b8; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; font-weight: 600; }
         
         /* Centered Mobile-Safe Universal Translate Dropdown Box */
@@ -24,9 +26,35 @@
         /* Clean up legacy banners and branding badges */
         .goog-te-gadget { color: transparent !important; font-size: 0px !important; }
         .goog-te-gadget span, .goog-te-banner-frame, #goog-gt-tt, .goog-logo-link { display: none !important; }
+
+        /* Interactive Interface Controls */
+        .input-label { display: block; font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 6px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+        .input-field { width: 100%; box-sizing: border-box; background-color: #0f172a; border: 1px solid #1e293b; border-radius: 8px; padding: 10px; color: #ffffff; font-family: monospace; font-size: 14px; outline: none; }
+        .input-field:focus { border-color: #38bdf8; }
+        
+        .toggle-btn { width: 100%; background-color: #0f172a; border: 1px solid #1e293b; color: #94a3b8; padding: 10px; font-size: 12px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s; text-align: center; }
+        .toggle-btn.active { background-color: #2563eb; color: #ffffff; box-shadow: 0 4px 6px -1px rgba(37,99,235,0.4); border-color: #2563eb; }
+        
+        /* Output Data Presentation Table Layout */
+        .table-container { overflow-x: auto; background-color: #020617; border: 1px solid #1e293b; border-radius: 12px; }
+        .table-header { padding: 12px; background-color: #0f172a; border-bottom: 1px solid #1e293b; display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: 700; }
+        table { width: 100%; border-collapse: collapse; font-family: monospace; font-size: 11px; text-align: left; }
+        th { background-color: #0f172a; color: #94a3b8; padding: 10px; border-bottom: 1px solid #1e293b; text-transform: uppercase; font-size: 10px; }
+        td { padding: 10px; border-bottom: 1px solid #0f172a; }
+        .row-fight { background-color: rgba(37, 99, 235, 0.08); color: #f8fafc; font-weight: bold; }
+        .row-layer { color: #64748b; }
+        .text-right { text-align: right; }
+        
+        .tc-tier { color: #94a3b8; font-weight: bold; }
+        .tc-ranged { color: #38bdf8; }
+        .tc-mounted { color: #f59e0b; }
+        .tc-ground { color: #34d399; }
+        .tc-siege { color: #c084fc; }
     </style>
 </head>
-
+<body>
 
 <div class="app-bg">
     <!-- Centered Universal Global Translation Drop-Box Selector -->
@@ -101,6 +129,13 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="https://google.com"></script>
+
 <script>
 /* HARDCODED MATHEMATICAL DATABASE PREVENTING SYSTEM DATA DROPS */
 const db = {
@@ -141,45 +176,32 @@ function runCalc() {
     const ls = parseFloat(document.getElementById('layerSize').value) || 0;
     
     const activeWeights = db[layers][bias];
-    document.getElementById('ratioInfo').innerText = activeWeights.map(x => (x * 100) + '%').join(' / ');
-
-    const lowFight = tt - layers + 1;
-    const uniLayers = Math.max(0, lowFight - 1);
-    const netFight = Math.max(0, ms - (uniLayers * ls * 4));
+    const ratioStr = activeWeights.map(w => (w * 100) + '%').join(' / ');
+    document.getElementById('ratioInfo').innerText = ratioStr;
 
     let html = '';
-    for(let i = tt; i >= 1; i--) {
-        let r = ls, m = ls, g = ls, s = ls;
-        let isF = (i >= lowFight && i <= tt);
-        
-        if(isF) {
-            let rowFactor = activeWeights[tt - i] || 0;
-            let segmentCap = netFight * rowFactor;
-            
-            r = (bias === 'RANGED')  ? segmentCap : ls;
-            m = (bias === 'MOUNTED') ? segmentCap : ls;
-            g = (bias === 'GROUND')  ? segmentCap : ls;
-            s = ls; 
-        }
-        
-        html += '<tr class="' + (isF ? 'row-fight' : 'row-layer') + '">';
-        html += '<td style="padding-left: 12px;" class="tc-tier">T' + i + '</td>';
-        html += '<td class="text-right tc-ranged">' + fmt(r) + '</td>';
-        html += '<td class="text-right tc-mounted">' + fmt(m) + '</td>';
-        html += '<td class="text-right tc-ground">' + fmt(g) + '</td>';
-        html += '<td class="text-right tc-siege">' + fmt(s) + '</td>';
-        html += '</tr>';
+    const fightTiers = [];
+    for (let i = 0; i < layers; i++) {
+        const tierNum = tt - i;
+        if (tierNum > 0) fightTiers.push(tierNum);
     }
-    document.getElementById('matrixDisplay').innerHTML = html;
-}
+    
+    let totalLayersCount = 0;
+    for (let t = 1; t <= tt; t++) {
+        if (!fightTiers.includes(t)) {
+            totalLayersCount += 4;
+        }
+    }
+    
+    const totalLayerTroops = totalLayersCount * ls;
+    const remainingMarchSpace = Math.max(0, ms - totalLayerTroops);
 
-setTimeout(runCalc, 200);
-
-function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-        pageLanguage: 'en',
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-    }, 'google_translate_element');
-}
-</script>
-<script type="text/javascript" src="https://google.com"></script>
+    for (let t = tt; t >= 1; t--) {
+        let isFight = fightTiers.includes(t);
+        let rowClass = isFight ? 'row-fight' : 'row-layer';
+        
+        let rVal = ls, mVal = ls, gVal = ls, sVal = ls;
+        
+        if (isFight) {
+            const weightIdx = fightTiers.indexOf(t);
+            const tierWeight = activeWeights[weightIdx];
