@@ -5,14 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Royals Standard March Calculator</title>
     <style>
-        /* Premium Built-in Dark Mode Theme */
-        body { 
-            top: 0px !important; 
-            margin: 0 !important; 
-            padding: 0 !important; 
+        /* Eliminates default browser spacing to remove the white border */
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100%;
+            height: 100%;
             background-color: #0f172a;
         }
-        .app-bg { background-color: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; padding: 16px; min-height: 100vh; box-sizing: border-box; }
+
+        /* Premium Built-in Dark Mode Theme */
+        .app-bg { 
+            background-color: #0f172a; 
+            color: #f8fafc; 
+            font-family: system-ui, -apple-system, sans-serif; 
+            padding: 16px; 
+            min-height: 100vh; 
+            box-sizing: border-box; 
+        }
+        
         .card { background-color: #020617; border: 1px solid #1e293b; border-radius: 12px; padding: 16px; margin-bottom: 16px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5); }
         .header-card { text-align: center; border-bottom: 2px solid #1e293b; padding-bottom: 12px; }
         .title { color: #38bdf8; font-size: 20px; font-weight: 800; letter-spacing: 0.5px; margin: 0; }
@@ -200,8 +211,3 @@ function runCalc() {
         let isFight = fightTiers.includes(t);
         let rowClass = isFight ? 'row-fight' : 'row-layer';
         
-        let rVal = ls, mVal = ls, gVal = ls, sVal = ls;
-        
-        if (isFight) {
-            const weightIdx = fightTiers.indexOf(t);
-            const tierWeight = activeWeights[weightIdx];
