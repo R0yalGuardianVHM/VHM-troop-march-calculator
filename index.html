@@ -3,89 +3,464 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Royals Standard March Calculator</title>
+    <title>Royals Standard March Calculator | Tactical War Room</title>
+    <!-- Futuristic & Tactical Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Orbitron:wght@500;700;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
     <style>
-        html, body { margin: 0 !important; padding: 0 !important; width: 100%; height: 100%; background-color: #0f172a; top: 0px !important; }
-        .app-bg { background-color: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; padding: 16px; min-height: 100vh; box-sizing: border-box; }
-        .card { background-color: #020617; border: 1px solid #1e293b; border-radius: 12px; padding: 16px; margin-bottom: 16px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5); }
-        .header-card { text-align: center; border-bottom: 2px solid #1e293b; padding-bottom: 12px; }
-        .title { color: #38bdf8; font-size: 20px; font-weight: 800; tracking-spacing: 0.5px; margin: 0; }
-        .subtitle { color: #94a3b8; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; font-weight: 600; }
-        .translate-box { display: flex; justify-content: center; align-items: center; margin-bottom: 16px; width: 100%; text-align: center; }
-        #google_translate_element { display: inline-block; min-width: 220px; }
-        #google_translate_element select { background-color: #020617 !important; color: #38bdf8 !important; border: 1px solid #1e293b !important; border-radius: 8px !important; padding: 10px 14px !important; font-size: 14px !important; outline: none !important; font-weight: 600 !important; width: 100%; cursor: pointer; }
+        :root {
+            --bg-base: #030712;
+            --panel-bg: rgba(7, 13, 27, 0.88);
+            --card-border: rgba(0, 240, 255, 0.2);
+            --neon-cyan: #00f0ff;
+            --neon-blue: #3b82f6;
+            --neon-gold: #fbbf24;
+            --ranged-color: #00f0ff;
+            --ground-color: #10b981;
+            --mounted-color: #f59e0b;
+            --siege-color: #c084fc;
+        }
+
+        * { box-sizing: border-box; }
+        
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-color: var(--bg-base);
+            /* Sci-fi tech grid background */
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                radial-gradient(ellipse at 50% 0%, rgba(0, 102, 255, 0.18) 0%, transparent 65%),
+                radial-gradient(circle at 100% 100%, rgba(245, 158, 11, 0.08) 0%, transparent 50%);
+            background-size: 24px 24px, 24px 24px, 100% 100%, 100% 100%;
+            color: #f1f5f9;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 15px;
+        }
+
+        .container {
+            max-width: 580px;
+            margin: 0 auto;
+            padding: 16px 14px 40px 14px;
+        }
+
+        /* Translator Box */
+        .translate-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        #google_translate_element select {
+            background-color: #070c18 !important;
+            color: var(--neon-cyan) !important;
+            border: 1px solid var(--card-border) !important;
+            border-radius: 4px !important;
+            padding: 6px 12px !important;
+            font-size: 12px !important;
+            font-family: 'JetBrains Mono', monospace !important;
+            outline: none !important;
+            cursor: pointer;
+        }
         .goog-te-gadget { color: transparent !important; font-size: 0px !important; }
         .goog-te-gadget span, .goog-te-banner-frame, #goog-gt-tt, .goog-logo-link { display: none !important; }
-        .input-label { display: block; font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 6px; }
+
+        /* Tech HUD Status Strip */
+        .hud-status-strip {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            color: #64748b;
+            margin-bottom: 10px;
+            padding: 0 4px;
+            letter-spacing: 1px;
+        }
+        .live-dot {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            background: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #10b981;
+            margin-right: 6px;
+            animation: pulse-green 2s infinite ease-in-out;
+        }
+        @keyframes pulse-green {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        /* Futuristic Tactical Panel Cards */
+        .card {
+            background: var(--panel-bg);
+            border: 1px solid var(--card-border);
+            position: relative;
+            padding: 18px 16px;
+            margin-bottom: 16px;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(0, 240, 255, 0.02);
+            /* Sci-Fi Angled Corners */
+            clip-path: polygon(
+                12px 0%, calc(100% - 12px) 0%, 
+                100% 12px, 100% calc(100% - 12px), 
+                calc(100% - 12px) 100%, 12px 100%, 
+                0% calc(100% - 12px), 0% 12px
+            );
+        }
+
+        /* Tech Bracket Accents on Corners */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 8px; height: 8px;
+            border-top: 2px solid var(--neon-cyan);
+            border-left: 2px solid var(--neon-cyan);
+        }
+        .card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; right: 0;
+            width: 8px; height: 8px;
+            border-bottom: 2px solid var(--neon-cyan);
+            border-right: 2px solid var(--neon-cyan);
+        }
+
+        /* Header */
+        .header-card {
+            text-align: center;
+            border-top: 2px solid var(--neon-cyan);
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.15), inset 0 0 15px rgba(0, 240, 255, 0.05);
+        }
+        .alliance-badge {
+            display: inline-block;
+            font-size: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            color: var(--neon-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.35);
+            padding: 3px 12px;
+            margin-bottom: 6px;
+            clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+        }
+        .title {
+            color: #ffffff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 19px;
+            font-weight: 900;
+            margin: 4px 0 2px 0;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
+        }
+        .subtitle {
+            color: #00f0ff;
+            opacity: 0.75;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Form Labels & Sections */
+        .section-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-        .input-field { width: 100%; box-sizing: border-box; background-color: #0f172a; border: 1px solid #1e293b; border-radius: 8px; padding: 10px; color: #ffffff; font-family: monospace; font-size: 14px; outline: none; }
-        .input-field:focus { border-color: #38bdf8; }
-        .toggle-btn { width: 100%; background-color: #0f172a; border: 1px solid #1e293b; color: #94a3b8; padding: 10px; font-size: 12px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s; text-align: center; }
-        .toggle-btn.active { background-color: #2563eb; color: #ffffff; box-shadow: 0 4px 6px -1px rgba(37,99,235,0.4); border-color: #2563eb; }
-        .table-container { overflow-x: auto; background-color: #020617; border: 1px solid #1e293b; border-radius: 12px; }
-        .table-header { padding: 12px; background-color: #0f172a; border-bottom: 1px solid #1e293b; display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: 700; }
-        table { width: 100%; border-collapse: collapse; font-family: monospace; font-size: 11px; text-align: left; }
-        th { background-color: #0f172a; color: #94a3b8; padding: 10px; border-bottom: 1px solid #1e293b; text-transform: uppercase; font-size: 10px; }
-        td { padding: 10px; border-bottom: 1px solid #0f172a; }
-        .row-fight { background-color: rgba(37, 99, 235, 0.08); color: #f8fafc; font-weight: bold; }
-        .row-layer { color: #64748b; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+
+        /* Tech Cut-Corner Buttons */
+        .toggle-btn {
+            background-color: #050b17;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #64748b;
+            padding: 10px 8px;
+            font-size: 12px;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+        }
+        .toggle-btn:hover {
+            color: #fff;
+            border-color: rgba(0, 240, 255, 0.4);
+            background: rgba(0, 240, 255, 0.05);
+        }
+        .toggle-btn.active {
+            background: rgba(14, 165, 233, 0.15);
+            color: #fff;
+            border-color: var(--neon-cyan);
+            box-shadow: inset 0 0 12px rgba(0, 240, 255, 0.3), 0 0 10px rgba(0, 240, 255, 0.2);
+        }
+
+        /* Bias-Specific Glowing Button States */
+        #bR.active {
+            border-color: var(--ranged-color);
+            color: var(--ranged-color);
+            background: rgba(0, 240, 255, 0.15);
+            box-shadow: 0 0 14px rgba(0, 240, 255, 0.3);
+        }
+        #bG.active {
+            border-color: var(--ground-color);
+            color: var(--ground-color);
+            background: rgba(16, 185, 129, 0.15);
+            box-shadow: 0 0 14px rgba(16, 185, 129, 0.3);
+        }
+        #bM.active {
+            border-color: var(--mounted-color);
+            color: var(--mounted-color);
+            background: rgba(245, 158, 11, 0.15);
+            box-shadow: 0 0 14px rgba(245, 158, 11, 0.3);
+        }
+
+        /* Inputs */
+        .input-group { margin-bottom: 12px; }
+        .input-field {
+            width: 100%;
+            background-color: #030814;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 4px;
+            padding: 10px 12px;
+            color: #ffffff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 15px;
+            font-weight: 700;
+            outline: none;
+            transition: all 0.25s ease;
+        }
+        .input-field:focus {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 12px rgba(0, 240, 255, 0.4), inset 0 0 6px rgba(0, 240, 255, 0.2);
+        }
+
+        /* High-Tech HUD Telemetry Display */
+        .hud-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            background: linear-gradient(180deg, rgba(8, 16, 32, 0.9) 0%, rgba(4, 8, 18, 0.95) 100%);
+            border: 1px solid rgba(0, 240, 255, 0.25);
+            padding: 12px 14px;
+            margin-bottom: 16px;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            box-shadow: inset 0 0 15px rgba(0, 240, 255, 0.05);
+        }
+        .hud-item { text-align: center; }
+        .hud-label {
+            font-size: 11px;
+            font-family: 'Orbitron', sans-serif;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        .hud-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            font-weight: 800;
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Matrix Table Display */
+        .table-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--card-border);
+            clip-path: polygon(
+                12px 0%, calc(100% - 12px) 0%, 
+                100% 12px, 100% calc(100% - 12px), 
+                calc(100% - 12px) 100%, 12px 100%, 
+                0% calc(100% - 12px), 0% 12px
+            );
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+        }
+        .table-header {
+            padding: 12px 14px;
+            background: rgba(3, 8, 20, 0.9);
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .table-header-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: #94a3b8;
+            letter-spacing: 1px;
+        }
+        .ratio-badge {
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--neon-cyan);
+            padding: 4px 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            border: 1px solid rgba(0, 240, 255, 0.35);
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+        }
+
+        .table-scroll { overflow-x: auto; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+        }
+        th {
+            background-color: rgba(3, 8, 20, 0.95);
+            color: #64748b;
+            padding: 10px;
+            border-bottom: 1px solid var(--card-border);
+            text-transform: uppercase;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            letter-spacing: 1px;
+        }
+        td {
+            padding: 8px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        /* Strike Tier Highlighting */
+        .row-fight {
+            background: rgba(0, 240, 255, 0.08) !important;
+            font-weight: 700;
+        }
+        .row-fight td { border-bottom: 1px solid rgba(0, 240, 255, 0.25); }
+        .row-layer { opacity: 0.55; }
+        .row-layer:hover { opacity: 1; background: rgba(0, 240, 255, 0.04); }
+
+        .tier-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            font-size: 11px;
+            font-weight: 800;
+            background: #0d1527;
+            color: #64748b;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 2px;
+        }
+        .row-fight .tier-badge {
+            background: var(--neon-gold);
+            color: #000;
+            font-weight: 900;
+            border-color: #f59e0b;
+            box-shadow: 0 0 10px rgba(251, 191, 36, 0.6);
+        }
+
         .text-right { text-align: right; }
-        .tc-tier { color: #94a3b8; font-weight: bold; }
-        .tc-ranged { color: #38bdf8; }
-        .tc-mounted { color: #f59e0b; }
-        .tc-ground { color: #34d399; }
-        .tc-siege { color: #c084fc; }
+        .tc-ranged { color: var(--ranged-color); }
+        .tc-mounted { color: var(--mounted-color); }
+        .tc-ground { color: var(--ground-color); }
+        .tc-siege { color: var(--siege-color); }
+        .highlight-dmg {
+            font-size: 13px;
+            font-weight: 800;
+            text-shadow: 0 0 10px currentColor;
+        }
     </style>
 </head>
 <body>
-<div class="app-bg">
+
+<div class="container">
     <div class="translate-box"><div id="google_translate_element"></div></div>
+    
+    <!-- Telemetry status -->
+    <div class="hud-status-strip">
+        <span><span class="live-dot"></span>SYS.ONLINE // TAC-MATRIX V4.2</span>
+        <span>SECURITY: ENCRYPTED</span>
+    </div>
+
+    <!-- Title / Alliance Banner -->
     <header class="card header-card">
-        <h1 class="title">Royals standard march calculator</h1>
-        <div class="subtitle">CONCENTRATED ATTACK PROFILE ENGINE</div>
+        <span class="alliance-badge">Battle Protocol // Alliance Target</span>
+        <h1 class="title">Royals March Calculator</h1>
+        <div class="subtitle">EVONY: TKR TACTICAL COMPOSITION ENGINE</div>
     </header>
+
+    <!-- Controls & Inputs -->
     <div class="card">
-        <div style="margin-bottom: 14px;">
-            <label class="input-label">Matrix Setup</label>
+        <!-- Matrix Depth -->
+        <div class="input-group">
+            <span class="section-label">Matrix Distribution Depth</span>
             <div class="grid-2">
-                <button onclick="setMatrix(3)" id="m3" class="toggle-btn active">3-Tier Matrix</button>
-                <button onclick="setMatrix(4)" id="m4" class="toggle-btn">4-Tier Matrix</button>
+                <button type="button" onclick="setMatrix(3)" id="m3" class="toggle-btn active">3-Tier Matrix</button>
+                <button type="button" onclick="setMatrix(4)" id="m4" class="toggle-btn">4-Tier Matrix</button>
             </div>
         </div>
-        <div style="margin-bottom: 14px;">
-            <label class="input-label">Core Attack Typemask</label>
+
+        <!-- Troop Strike Class -->
+        <div class="input-group">
+            <span class="section-label">Primary Attack Bias</span>
             <div class="grid-3">
-                <button onclick="setBias('RANGED')" id="bR" class="toggle-btn active">Ranged</button>
-                <button onclick="setBias('GROUND')" id="bG" class="toggle-btn">Ground</button>
-                <button onclick="setBias('MOUNTED')" id="bM" class="toggle-btn">Mounted</button>
+                <button type="button" onclick="setBias('RANGED')" id="bR" class="toggle-btn active">🏹 Ranged</button>
+                <button type="button" onclick="setBias('GROUND')" id="bG" class="toggle-btn">🛡️ Ground</button>
+                <button type="button" onclick="setBias('MOUNTED')" id="bM" class="toggle-btn">🐎 Mounted</button>
             </div>
         </div>
-        <div style="margin-bottom: 6px;">
-            <label class="input-label">Total March Size</label>
-            <input type="number" id="marchSize" value="6000000" oninput="runCalc()" class="input-field" style="font-size: 16px; font-weight: bold; color: #38bdf8;">
+
+        <!-- March Size Input -->
+        <div class="input-group">
+            <label class="section-label" for="marchSize">Total March Size Capacity</label>
+            <input type="number" id="marchSize" value="6000000" step="50000" oninput="runCalc()" class="input-field" style="color: var(--neon-cyan); font-size: 18px;">
         </div>
-        <div class="grid-2" style="margin-top: 12px; margin-bottom: 0;">
+
+        <!-- Sub Inputs -->
+        <div class="grid-2" style="margin-bottom: 0;">
             <div>
-                <label class="input-label">Top Tier</label>
+                <label class="section-label" for="topTier">Keep Max Tier</label>
                 <input type="number" id="topTier" value="17" min="5" max="25" oninput="runCalc()" class="input-field">
             </div>
             <div>
-                <label class="input-label">Layer Size</label>
-                <input type="number" id="layerSize" value="10000" oninput="runCalc()" class="input-field">
+                <label class="section-label" for="layerSize">Layer Buffer Size</label>
+                <input type="number" id="layerSize" value="10000" step="1000" oninput="runCalc()" class="input-field">
             </div>
         </div>
     </div>
-    <div class="table-container">
-        <div class="table-header">
-            <span style="color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.5px;">CALCULATED DEPLOYMENT ARCHITECTURE</span>
-            <span id="ratioInfo" style="color: #38bdf8; font-family: monospace;">20% / 30% / 50%</span>
+
+    <!-- Futuristic Telemetry HUD (Updated Label) -->
+    <div class="hud-grid">
+        <div class="hud-item">
+            <div class="hud-label">Attacking Troop Force</div>
+            <div class="hud-val" id="hudCoreSpace" style="color: var(--neon-gold); text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);">0</div>
         </div>
-        <div style="overflow-x: auto;">
+        <div class="hud-item">
+            <div class="hud-label">Layer Consumption</div>
+            <div class="hud-val" id="hudLayerSpace" style="color: #94a3b8;">0</div>
+        </div>
+    </div>
+
+    <!-- Deployment Matrix -->
+    <div class="table-card">
+        <div class="table-header">
+            <span class="table-header-title">TACTICAL DEPLOYMENT MATRIX</span>
+            <span id="ratioInfo" class="ratio-badge">20% / 30% / 50%</span>
+        </div>
+        <div class="table-scroll">
             <table>
                 <thead>
                     <tr>
-                        <th style="padding-left: 12px;">Tier</th>
+                        <th style="padding-left: 12px; width: 65px;">Tier</th>
                         <th class="text-right tc-ranged">Ranged</th>
                         <th class="text-right tc-mounted">Mount</th>
                         <th class="text-right tc-ground">Ground</th>
@@ -97,18 +472,21 @@
         </div>
     </div>
 </div>
+
 <script>
 const db = {
     3: { RANGED: [0.20, 0.30, 0.50], GROUND: [0.50, 0.30, 0.20], MOUNTED: [0.35, 0.45, 0.20] },
     4: { RANGED: [0.10, 0.20, 0.30, 0.40], GROUND: [0.40, 0.30, 0.20, 0.10], MOUNTED: [0.25, 0.45, 0.20, 0.10] }
 };
 let layers = 3, bias = 'RANGED';
+
 function setMatrix(n) {
     layers = n;
     document.getElementById('m3').className = (n === 3) ? "toggle-btn active" : "toggle-btn";
     document.getElementById('m4').className = (n === 4) ? "toggle-btn active" : "toggle-btn";
     runCalc();
 }
+
 function setBias(b) {
     bias = b;
     document.getElementById('bR').className = (b === 'RANGED') ? "toggle-btn active" : "toggle-btn";
@@ -116,32 +494,65 @@ function setBias(b) {
     document.getElementById('bM').className = (b === 'MOUNTED') ? "toggle-btn active" : "toggle-btn";
     runCalc();
 }
+
 function fmt(n) { return Math.round(n).toLocaleString('en-GB'); }
+
 function runCalc() {
     const ms = parseFloat(document.getElementById('marchSize').value) || 0;
     const tt = parseInt(document.getElementById('topTier').value) || 17;
     const ls = parseFloat(document.getElementById('layerSize').value) || 0;
     const activeWeights = db[layers][bias];
+    
     document.getElementById('ratioInfo').innerText = activeWeights.map(w => (w * 100) + '%').join(' / ');
-    let html = '';
+    
     const fightTiers = [];
-    for (let i = 0; i < layers; i++) { if (tt - i > 0) fightTiers.push(tt - i); }
+    for (let i = 0; i < layers; i++) { 
+        if (tt - i > 0) fightTiers.push(tt - i); 
+    }
+
     let totalLayersCount = 0;
-    for (let t = 1; t <= tt; t++) { if (!fightTiers.includes(t)) totalLayersCount += 4; }
-    const remainingMarchSpace = Math.max(0, ms - (totalLayersCount * ls));
+    for (let t = 1; t <= tt; t++) { 
+        if (!fightTiers.includes(t)) totalLayersCount += 4; 
+    }
+
+    const layerSpaceUsed = totalLayersCount * ls;
+    const remainingMarchSpace = Math.max(0, ms - layerSpaceUsed);
+
+    // Update HUD Stats
+    document.getElementById('hudCoreSpace').innerText = fmt(remainingMarchSpace);
+    document.getElementById('hudLayerSpace').innerText = fmt(layerSpaceUsed);
+
+    let html = '';
     for (let t = tt; t >= 1; t--) {
-        let isFight = fightTiers.includes(t), rowClass = isFight ? 'row-fight' : 'row-layer';
+        const isFight = fightTiers.includes(t);
+        const rowClass = isFight ? 'row-fight' : 'row-layer';
         let rVal = ls, mVal = ls, gVal = ls, sVal = ls;
+
         if (isFight) {
             const w = activeWeights[fightTiers.indexOf(t)];
             if (bias === 'RANGED') rVal = remainingMarchSpace * w;
             else if (bias === 'GROUND') gVal = remainingMarchSpace * w;
             else if (bias === 'MOUNTED') mVal = remainingMarchSpace * w;
         }
-        html += `<tr class="${rowClass}"><td style="padding-left:12px;" class="tc-tier">T${t}</td><td class="text-right">${fmt(rVal)}</td><td class="text-right">${fmt(mVal)}</td><td class="text-right">${fmt(gVal)}</td><td class="text-right">${fmt(sVal)}</td></tr>`;
+
+        const rClass = (isFight && bias === 'RANGED') ? 'text-right highlight-dmg tc-ranged' : 'text-right';
+        const mClass = (isFight && bias === 'MOUNTED') ? 'text-right highlight-dmg tc-mounted' : 'text-right';
+        const gClass = (isFight && bias === 'GROUND') ? 'text-right highlight-dmg tc-ground' : 'text-right';
+        const sClass = 'text-right';
+
+        html += `
+            <tr class="${rowClass}">
+                <td style="padding-left:12px;"><span class="tier-badge">T${t}</span></td>
+                <td class="${rClass}">${fmt(rVal)}</td>
+                <td class="${mClass}">${fmt(mVal)}</td>
+                <td class="${gClass}">${fmt(gVal)}</td>
+                <td class="${sClass}">${fmt(sVal)}</td>
+            </tr>
+        `;
     }
     document.getElementById('matrixDisplay').innerHTML = html;
 }
+
 window.onload = function() { runCalc(); };
 </script>
 </body>
