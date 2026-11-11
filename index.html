@@ -221,3 +221,755 @@
             background: transparent;
             border: 1px solid var(--text-faint);
             color: var(--text-muted);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .sound-toggle.active {
+            border-color: var(--accent-glow);
+            color: var(--accent-glow);
+            background: var(--accent-soft);
+        }
+
+        /* Form Labels & Sections */
+        .section-label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 8px;
+        }
+
+        .section-label span.tag {
+            color: var(--accent-glow);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        /* Buttons & Toggles */
+        .toggle-btn {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
+            padding: 12px 14px;
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .toggle-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 2px;
+            background: transparent;
+            transition: background 0.2s;
+        }
+
+        .toggle-btn:hover {
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .toggle-btn.active {
+            background: linear-gradient(180deg, rgba(var(--accent-glow-rgb), 0.2) 0%, rgba(var(--accent-glow-rgb), 0.05) 100%);
+            border-color: var(--accent-glow);
+            color: #ffffff;
+            box-shadow: 0 4px 18px -4px rgba(var(--accent-glow-rgb), 0.45),
+                        0 0 12px rgba(var(--accent-glow-rgb), 0.2) inset;
+        }
+        .toggle-btn.active::after {
+            background: var(--accent-glow);
+        }
+
+        /* Input Controls */
+        .input-field {
+            width: 100%;
+            background: rgba(10, 15, 29, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 12px 14px;
+            color: #ffffff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 15px;
+            font-weight: 600;
+            outline: none;
+            transition: all 0.25s ease;
+        }
+
+        .input-field:focus {
+            border-color: var(--accent-glow);
+            box-shadow: 0 0 15px rgba(var(--accent-glow-rgb), 0.25);
+            background: rgba(15, 23, 42, 0.95);
+        }
+
+        /* Preset Chips */
+        .preset-row {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+            overflow-x: auto;
+            padding-bottom: 2px;
+        }
+
+        .chip {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: 0.15s;
+            white-space: nowrap;
+        }
+        .chip:hover {
+            color: #fff;
+            border-color: var(--accent-glow);
+            background: var(--accent-soft);
+        }
+
+        /* Composition Power Bar */
+        .power-bar-wrap {
+            margin-top: 14px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            padding: 10px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .power-bar-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 6px;
+        }
+
+        .power-bar {
+            height: 8px;
+            border-radius: 4px;
+            display: flex;
+            overflow: hidden;
+            background: #1e293b;
+        }
+
+        .pb-segment {
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        /* Table Architecture */
+        .table-container {
+            border-radius: 12px;
+            border: 1px solid var(--bg-card-border);
+            overflow: hidden;
+            background: rgba(8, 12, 22, 0.95);
+        }
+
+        .table-toolbar {
+            background: rgba(15, 23, 42, 0.85);
+            padding: 14px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .ratio-pill {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-glow);
+            background: var(--accent-soft);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(var(--accent-glow-rgb), 0.3);
+            letter-spacing: 0.5px;
+        }
+
+        .action-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--text-main);
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+        }
+        .action-btn:hover {
+            background: var(--accent-glow);
+            color: #000000;
+            border-color: var(--accent-glow);
+            box-shadow: 0 0 14px rgba(var(--accent-glow-rgb), 0.5);
+        }
+
+        .table-scroll {
+            overflow-x: auto;
+            max-height: 540px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(var(--accent-glow-rgb), 0.3) rgba(0,0,0,0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+        }
+
+        thead th {
+            position: sticky;
+            top: 0;
+            background: #090e1b;
+            color: var(--text-muted);
+            padding: 12px 14px;
+            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+            z-index: 2;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            transition: background 0.15s ease;
+        }
+
+        tbody tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        tbody tr.row-fight {
+            background: linear-gradient(90deg, rgba(var(--accent-glow-rgb), 0.14) 0%, rgba(var(--accent-glow-rgb), 0.02) 100%);
+            font-weight: 700;
+            color: #ffffff;
+        }
+        tbody tr.row-fight:hover {
+            background: linear-gradient(90deg, rgba(var(--accent-glow-rgb), 0.22) 0%, rgba(var(--accent-glow-rgb), 0.06) 100%);
+        }
+
+        tbody tr.row-layer {
+            color: var(--text-faint);
+        }
+        tbody tr.row-layer:hover {
+            color: var(--text-muted);
+        }
+
+        td {
+            padding: 10px 14px;
+            white-space: nowrap;
+        }
+
+        .tier-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 38px;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 11px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .row-fight .tier-badge {
+            background: rgba(var(--accent-glow-rgb), 0.2);
+            color: #ffffff;
+            border-color: var(--accent-glow);
+            box-shadow: 0 0 10px rgba(var(--accent-glow-rgb), 0.3);
+        }
+
+        .tier-label-cell {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .fight-tag {
+            font-size: 9px;
+            background: var(--accent-glow);
+            color: #000;
+            font-weight: 800;
+            padding: 1px 5px;
+            border-radius: 3px;
+            letter-spacing: 0.5px;
+        }
+
+        .text-right { text-align: right; }
+        .tc-ranged { color: var(--tc-ranged); }
+        .tc-mounted { color: var(--tc-mounted); }
+        .tc-ground { color: var(--tc-ground); }
+        .tc-siege { color: var(--tc-siege); }
+
+        /* Toast Feedback */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: rgba(12, 19, 34, 0.95);
+            border: 1px solid var(--accent-glow);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.7), 0 0 15px rgba(var(--accent-glow-rgb), 0.4);
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-family: 'Chakra Petch', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            pointer-events: none;
+        }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @media (max-width: 640px) {
+            body { padding: 10px 8px 36px; }
+            .card { padding: 14px; }
+            .title { font-size: 20px; }
+            .grid-3 { grid-template-columns: 1fr; }
+            .toggle-btn { padding: 10px; }
+            td, th { padding: 8px 10px; font-size: 11px; }
+        }
+    </style>
+</head>
+<body class="theme-ranged">
+    <div class="scanlines"></div>
+
+    <div class="war-container">
+        <!-- TACTICAL GOOGLE TRANSLATE CONTAINER -->
+        <div class="translate-wrapper">
+            <div id="google_translate_element"></div>
+        </div>
+
+        <!-- COMMAND HUD HEADER -->
+        <header class="card header-card">
+            <div class="header-top">
+                <div class="sys-badge">
+                    <span class="pulse-beacon"></span>
+                    <span>Direct Strike Matrix</span>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button class="sound-toggle active" id="soundBtn" onclick="toggleAudio()">FX: ON</button>
+                    <div class="sys-badge" style="color: var(--text-muted); border-color: rgba(255,255,255,0.1);">
+                        v4.2 PRO
+                    </div>
+                </div>
+            </div>
+            <h1 class="title">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="22" y1="12" x2="18" y2="12"></line>
+                    <line x1="6" y1="12" x2="2" y2="12"></line>
+                    <line x1="12" y1="6" x2="12" y2="2"></line>
+                    <line x1="12" y1="22" x2="12" y2="18"></line>
+                </svg>
+                Royals Standard March
+            </h1>
+            <div class="subtitle">Concentrated Attack Profile Engine // Mono-Focus Strike</div>
+        </header>
+
+        <!-- CONTROLS PANEL -->
+        <div class="card">
+            <!-- Matrix Setup -->
+            <div style="margin-bottom: 16px;">
+                <div class="section-label">
+                    <span>1. Strike Depth Setup</span>
+                    <span class="tag">CONCENTRATION TIERS</span>
+                </div>
+                <div class="grid-2">
+                    <button onclick="setMatrix(3)" id="m3" class="toggle-btn active">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 2.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3z"/></svg>
+                        3-Tier Frontline
+                    </button>
+                    <button onclick="setMatrix(4)" id="m4" class="toggle-btn">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 2.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z"/></svg>
+                        4-Tier Frontline
+                    </button>
+                </div>
+            </div>
+
+            <!-- Troop Bias Type -->
+            <div style="margin-bottom: 16px;">
+                <div class="section-label">
+                    <span>2. Core Attack Typemask</span>
+                    <span class="tag">LEAD BATTLE CLASS</span>
+                </div>
+                <div class="grid-3">
+                    <button onclick="setBias('RANGED')" id="bR" class="toggle-btn active">
+                        <span style="color: var(--tc-ranged); font-size: 16px;">🏹</span> Ranged
+                    </button>
+                    <button onclick="setBias('MOUNTED')" id="bM" class="toggle-btn">
+                        <span style="color: var(--tc-mounted); font-size: 16px;">⚡</span> Mounted
+                    </button>
+                    <button onclick="setBias('GROUND')" id="bG" class="toggle-btn">
+                        <span style="color: var(--tc-ground); font-size: 16px;">🛡️</span> Ground
+                    </button>
+                </div>
+            </div>
+
+            <!-- March Inputs -->
+            <div style="margin-bottom: 14px;">
+                <div class="section-label">
+                    <span>3. Total March Size</span>
+                    <span class="tag">RALLY LOADOUT</span>
+                </div>
+                <div class="input-group">
+                    <input type="number" id="marchSize" value="6000000" oninput="runCalc()" class="input-field" style="color: var(--accent-glow); font-size: 18px;">
+                </div>
+                <!-- Quick Preset Chips -->
+                <div class="preset-row">
+                    <span class="chip" onclick="setMarchPreset(2500000)">2.5M</span>
+                    <span class="chip" onclick="setMarchPreset(4000000)">4M</span>
+                    <span class="chip" onclick="setMarchPreset(6000000)">6M</span>
+                    <span class="chip" onclick="setMarchPreset(8000000)">8M</span>
+                    <span class="chip" onclick="setMarchPreset(10000000)">10M</span>
+                    <span class="chip" onclick="setMarchPreset(12000000)">12M</span>
+                    <span class="chip" onclick="setMarchPreset(15000000)">15M</span>
+                </div>
+            </div>
+
+            <!-- Top Tier & Layer Size -->
+            <div class="grid-2">
+                <div>
+                    <div class="section-label">
+                        <span>Top Tier (Max)</span>
+                        <span class="tag">TIER</span>
+                    </div>
+                    <input type="number" id="topTier" value="17" min="5" max="25" oninput="runCalc()" class="input-field">
+                </div>
+                <div>
+                    <div class="section-label">
+                        <span>Layer Size</span>
+                        <span class="tag">PROTECTION PER ROW</span>
+                    </div>
+                    <input type="number" id="layerSize" value="10000" oninput="runCalc()" class="input-field">
+                </div>
+            </div>
+
+            <!-- Live Force Composition Visualizer Bar -->
+            <div class="power-bar-wrap">
+                <div class="power-bar-stats">
+                    <span id="statFightForce">Primary Strike Force: ---</span>
+                    <span id="statLayersTotal">Buffer Layers: ---</span>
+                </div>
+                <div class="power-bar" id="distBar">
+                    <div class="pb-segment" id="pbR" style="background: var(--tc-ranged); width: 75%;"></div>
+                    <div class="pb-segment" id="pbM" style="background: var(--tc-mounted); width: 8%;"></div>
+                    <div class="pb-segment" id="pbG" style="background: var(--tc-ground); width: 8%;"></div>
+                    <div class="pb-segment" id="pbS" style="background: var(--tc-siege); width: 9%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MATRIX OUTPUT TABLE -->
+        <div class="table-container">
+            <div class="table-toolbar">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-family: 'Chakra Petch', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 1px; color: #fff;">
+                        CALCULATED DEPLOYMENT ARCHITECTURE
+                    </span>
+                    <span id="ratioInfo" class="ratio-pill">20% / 30% / 50%</span>
+                </div>
+                <button class="action-btn" onclick="copyMarchData()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy March
+                </button>
+            </div>
+            
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 140px;">Tier Class</th>
+                            <th class="text-right tc-ranged">Ranged 🏹</th>
+                            <th class="text-right tc-mounted">Mount ⚡</th>
+                            <th class="text-right tc-ground">Ground 🛡️</th>
+                            <th class="text-right tc-siege">Siege 💣</th>
+                        </tr>
+                    </thead>
+                    <tbody id="matrixDisplay">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="color: var(--accent-glow);"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span id="toastMsg">Standard March Copied to Clipboard</span>
+    </div>
+
+    <script>
+        // Concentration weights database
+        const db = {
+            3: {
+                RANGED:  [0.20, 0.30, 0.50],
+                GROUND:  [0.50, 0.30, 0.20],
+                MOUNTED: [0.35, 0.45, 0.20]
+            },
+            4: {
+                RANGED:  [0.10, 0.20, 0.30, 0.40],
+                GROUND:  [0.40, 0.30, 0.20, 0.10],
+                MOUNTED: [0.25, 0.45, 0.20, 0.10]
+            }
+        };
+
+        let layers = 3;
+        let bias = 'RANGED';
+        let soundEnabled = true;
+        let audioCtx = null;
+
+        // Tactical Web Audio Synthesizer
+        function playSfx(type = 'click') {
+            if (!soundEnabled) return;
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                const now = audioCtx.currentTime;
+                if (type === 'click') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(800, now);
+                    osc.frequency.exponentialRampToValueAtTime(300, now + 0.06);
+                    gain.gain.setValueAtTime(0.12, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.06);
+                    osc.start(now);
+                    osc.stop(now + 0.06);
+                } else if (type === 'success') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(520, now);
+                    osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+                    osc.start(now);
+                    osc.stop(now + 0.15);
+                }
+            } catch (e) {
+                // AudioContext not available or blocked
+            }
+        }
+
+        function toggleAudio() {
+            soundEnabled = !soundEnabled;
+            const btn = document.getElementById('soundBtn');
+            btn.className = soundEnabled ? 'sound-toggle active' : 'sound-toggle';
+            btn.innerText = soundEnabled ? 'FX: ON' : 'FX: OFF';
+            if (soundEnabled) playSfx('click');
+        }
+
+        function setMatrix(n) {
+            playSfx('click');
+            layers = n;
+            document.getElementById('m3').className = (n === 3) ? "toggle-btn active" : "toggle-btn";
+            document.getElementById('m4').className = (n === 4) ? "toggle-btn active" : "toggle-btn";
+            runCalc();
+        }
+
+        function setBias(b) {
+            playSfx('click');
+            bias = b;
+
+            // Update body accent theme
+            document.body.className = `theme-${b.toLowerCase()}`;
+
+            ['R', 'G', 'M'].forEach(k => {
+                const id = 'b' + k;
+                const profileKey = k === 'R' ? 'RANGED' : (k === 'G' ? 'GROUND' : 'MOUNTED');
+                document.getElementById(id).className = (b === profileKey) ? "toggle-btn active" : "toggle-btn";
+            });
+            runCalc();
+        }
+
+        function setMarchPreset(val) {
+            playSfx('click');
+            document.getElementById('marchSize').value = val;
+            runCalc();
+        }
+
+        function fmt(n) { 
+            return Math.round(n).toLocaleString('en-GB'); 
+        }
+
+        function runCalc() {
+            const ms = parseFloat(document.getElementById('marchSize').value) || 0;
+            const tt = parseInt(document.getElementById('topTier').value) || 17;
+            const ls = parseFloat(document.getElementById('layerSize').value) || 0;
+
+            const activeWeights = db[layers][bias];
+            document.getElementById('ratioInfo').innerText = activeWeights.map(w => (w * 100).toFixed(0) + '%').join(' / ');
+
+            const fightTiers = [];
+            for (let i = 0; i < layers; i++) {
+                if (tt - i > 0) fightTiers.push(tt - i);
+            }
+
+            let nonFightTiersCount = 0;
+            for (let t = 1; t <= tt; t++) {
+                if (!fightTiers.includes(t)) nonFightTiersCount++;
+            }
+
+            const totalLayerTroops = nonFightTiersCount * ls * 4;
+            const remainingMarchSpace = Math.max(0, ms - totalLayerTroops);
+
+            // Update stats
+            document.getElementById('statFightForce').innerText = `Strike Force: ${fmt(remainingMarchSpace)} (${((remainingMarchSpace/ms)*100 || 0).toFixed(1)}%)`;
+            document.getElementById('statLayersTotal').innerText = `Buffer Layers: ${fmt(totalLayerTroops)} (${((totalLayerTroops/ms)*100 || 0).toFixed(1)}%)`;
+
+            let sumR = 0, sumM = 0, sumG = 0, sumS = 0;
+            let html = '';
+
+            for (let t = tt; t >= 1; t--) {
+                const isFight = fightTiers.includes(t);
+                const rowClass = isFight ? 'row-fight' : 'row-layer';
+
+                let rVal = ls, mVal = ls, gVal = ls, sVal = ls;
+                let tierWeightPercent = 0;
+
+                if (isFight) {
+                    const idx = fightTiers.indexOf(t);
+                    const w = activeWeights[idx];
+                    tierWeightPercent = (w * 100).toFixed(0);
+
+                    if (bias === 'RANGED') rVal = remainingMarchSpace * w;
+                    else if (bias === 'GROUND') gVal = remainingMarchSpace * w;
+                    else if (bias === 'MOUNTED') mVal = remainingMarchSpace * w;
+                }
+
+                sumR += rVal; sumM += mVal; sumG += gVal; sumS += sVal;
+
+                html += `
+                <tr class="${rowClass}">
+                    <td>
+                        <div class="tier-label-cell">
+                            <span class="tier-badge">T${t}</span>
+                            ${isFight ? `<span class="fight-tag">${tierWeightPercent}%</span>` : ''}
+                        </div>
+                    </td>
+                    <td class="text-right tc-ranged">${fmt(rVal)}</td>
+                    <td class="text-right tc-mounted">${fmt(mVal)}</td>
+                    <td class="text-right tc-ground">${fmt(gVal)}</td>
+                    <td class="text-right tc-siege">${fmt(sVal)}</td>
+                </tr>`;
+            }
+
+            document.getElementById('matrixDisplay').innerHTML = html;
+
+            // Live army distribution breakdown
+            const totalSum = (sumR + sumM + sumG + sumS) || 1;
+            document.getElementById('pbR').style.width = ((sumR / totalSum) * 100) + '%';
+            document.getElementById('pbM').style.width = ((sumM / totalSum) * 100) + '%';
+            document.getElementById('pbG').style.width = ((sumG / totalSum) * 100) + '%';
+            document.getElementById('pbS').style.width = ((sumS / totalSum) * 100) + '%';
+        }
+
+        // Copy formatted marching orders for Discord / Alliance Chat
+        function copyMarchData() {
+            playSfx('success');
+            const ms = parseFloat(document.getElementById('marchSize').value) || 0;
+            const tt = parseInt(document.getElementById('topTier').value) || 17;
+            const ls = parseFloat(document.getElementById('layerSize').value) || 0;
+            const activeWeights = db[layers][bias];
+
+            const fightTiers = [];
+            for (let i = 0; i < layers; i++) {
+                if (tt - i > 0) fightTiers.push(tt - i);
+            }
+
+            let nonFightTiersCount = 0;
+            for (let t = 1; t <= tt; t++) {
+                if (!fightTiers.includes(t)) nonFightTiersCount++;
+            }
+            const remainingMarchSpace = Math.max(0, ms - (nonFightTiersCount * ls * 4));
+
+            let text = `🎯 [ROYALS STANDARD MARCH] 🎯\n`;
+            text += `Primary: ${bias} | Tiers: ${layers}-Tier | Total: ${fmt(ms)}\n`;
+            text += `Protection Layers: ${fmt(ls)} per troop | Top Tier: T${tt}\n`;
+            text += `--------------------------------------\n`;
+
+            for (let i = 0; i < fightTiers.length; i++) {
+                const t = fightTiers[i];
+                const w = activeWeights[i];
+                const mainAmount = fmt(remainingMarchSpace * w);
+                text += `T${t} [${(w * 100).toFixed(0)}%] -> ${bias}: ${mainAmount} (Layers: ${fmt(ls)})\n`;
+            }
+            const lowestFightTier = fightTiers[fightTiers.length - 1];
+            text += `T${lowestFightTier - 1} to T1 -> ${fmt(ls)} each (R/M/G/S)\n`;
+            text += `--------------------------------------`;
+
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("Standard March Copied to Clipboard!");
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        window.onload = function() { 
+            runCalc(); 
+        };
+    </script>
+</body>
+</html>
